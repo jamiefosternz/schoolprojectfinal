@@ -1,30 +1,15 @@
-from time import sleep
+#import dependencies
 import os
 
-# Greeter is a terminal application that greets old friends warmly,
-#   and remembers new friends.
+#init variables
+cust_name = ""
+address = ""
+ph_number = 0
+pizza_number = 0
 
-# Display a title bar.
-print("\t**********************************************")
-print("\t***  Greeter - Hello old and new friends!  ***")
-print("\t**********************************************")
+order_cost = 0
 
-# Print a bunch of information, in short intervals
-names = ['aaron', 'brenda', 'cyrene', 'david', 'eric']
+pizzas = ["Cheese", "Pepperoni", "Hawaiian", "Veggie", "Beef & Onion", "Garlic Cheese", "Ham & Cheese", "Butter Chicken", "Shrimp", "Meatlovers", "Apricot Chicken", "Supreme"]
+pizza_prices = [10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 15.5, 15.5, 15.5, 15.5, 15.5, ]
 
-# Print each name 5 times.
-for name in names:
-    # Clear the screen before listing names.
-    os.system('cls')
-    
-    # Display the title bar.
-    print("\t**********************************************")
-    print("\t***  Greeter - Hello old and new friends!  ***")
-    print("\t**********************************************")
 
-    print("\n\n")
-    for x in range(0,5):
-        print(name.title())
-    
-    # Pause for 1 second between batches.
-    sleep(1)
