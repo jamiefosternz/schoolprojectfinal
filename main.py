@@ -217,13 +217,20 @@ while True:
     printOut(3)
     if validate == True:
         print("ORDER CONFIRMED")
-        filename = strftime("%Y-%m-%d %H:%M:%S", localtime())+".txt"
+        filename = "dockets/"+strftime("%Y-%m-%d_%H.%M", localtime())+".txt"
+        if cust_ph_number == None:
+            cust_ph_number = ""
+            cust_address = ""
         docket = open(filename,"w")
         docket.write(cust_name + "\n" + cust_address + "\n" + cust_ph_number + "\n\n")
         i = 0
         for i  in range(len(cust_pizzas)):
             docket.write("{} ${}\n".format(cust_pizzas[i], pizza_prices[pizzas.index(cust_pizzas[i])]))
-        docket.write("TOTAL= " + cust_price + "\n")
+        if cust_delivery == True:
+            docket.write("Delivery $3 \n\n")
+        docket.write("TOTAL= " + str(cust_price) + "\n")
+        
+        docket.close()
         
     else:
         print("ORDER CLEARED")
