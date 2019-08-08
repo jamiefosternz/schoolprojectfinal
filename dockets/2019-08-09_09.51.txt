@@ -1,0 +1,12 @@
+Jamie
+17 Seymour AVe
+021 106 2763
+
+Pepperoni $10.5
+Hawaiian $10.5
+Veggie $10.5
+Beef & Onion $10.5
+Apricot Chicken $15.5
+Delivery $3 
+
+TOTAL= 60.5

@@ -178,17 +178,17 @@ def pizzaQuery():
     global cust_price
     i = 0
     while i < cust_pizza_number:
-        #try:
-        cust_input = int(input("What is the {} pizza the customer is ordering? >".format(ordinal(i+1))))
-        if cust_input > 0 and cust_input < 13:
-            i += 1
-            cust_pizzas.append(pizzas[cust_input-1])
-            cust_price += pizza_prices[cust_input-1]
-            printOut(2)
-        else:
-            printOut(2)
-            print("Wrong input, try again")
-        #except:
+        try:
+            cust_input = int(input("What is the {} pizza the customer is ordering? >".format(ordinal(i+1))))
+            if cust_input > 0 and cust_input < 13:
+                i += 1
+                cust_pizzas.append(pizzas[cust_input-1])
+                cust_price += pizza_prices[cust_input-1]
+                printOut(2)
+            else:
+                printOut(2)
+                print("Wrong input, try again")
+        except:
             printOut(2)
             print("That's not a valid number.  Try again.")
 while True:
