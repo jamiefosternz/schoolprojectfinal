@@ -1,6 +1,7 @@
 #import dependencies
 import os
 import time
+from time import localtime, strftime
 
 #init global cust. variables
 cust_name = ""
@@ -52,7 +53,19 @@ def printOut(x):
             print("{}: {}".format(i+1, pizzas[i]))
         print(seperator)
     elif x == 3:
+        global cust_pizzas
         title()
+        print("ORDER:\n")
+        custInfo()
+        blankLine(2)
+        i = 0
+        for i  in range(len(cust_pizzas)):
+            print("{} ${}".format(cust_pizzas[i], pizza_prices[pizzas.index(cust_pizzas[i])]))
+        if cust_delivery == True:
+            print("Delivery $3")
+        print("TOTAL= ${}".format(cust_price))
+        print(seperator)
+        
         
     elif x == 4:
         title()
@@ -137,6 +150,18 @@ def deliveryQuery():
         printOut(1)
         print("Wrong input, try again")
 
+def confirmQuery():
+    global cust_price
+    while True:
+        cust_input = input("Do you want to confirm this order? (y/n) >")
+        if cust_input.lower() == "y" or cust_input.lower() == "n":
+            if cust_input.lower() == "y":
+                return True
+            else:
+                return False
+        printOut(3)
+        print("Wrong input, try again")
+
 def orderSizeQuery():
     while True:
         try:
@@ -188,5 +213,27 @@ while True:
     pizzaQuery()
     
     printOut(3)
+    validate = confirmQuery()
+    printOut(3)
+    if validate == True:
+        print("ORDER CONFIRMED")
+        filename = strftime("%Y-%m-%d %H:%M:%S", localtime())+".txt"
+        docket = open(filename,"w")
+        docket.write(cust_name + "\n" + cust_address + "\n" + cust_ph_number + "\n\n")
+        i = 0
+        for i  in range(len(cust_pizzas)):
+            docket.write("{} ${}\n".format(cust_pizzas[i], pizza_prices[pizzas.index(cust_pizzas[i])]))
+        docket.write("TOTAL= " + cust_price + "\n")
+        
+    else:
+        print("ORDER CLEARED")
+     
+    cust_name = ""
+    cust_address = ""
+    cust_ph_number = None 
+    cust_pizza_number = None
+    cust_pizzas = []
+    cust_price = 0
+    cust_delivery = None
     
-    time.sleep(5)
+    time.sleep(3)
