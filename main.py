@@ -3,14 +3,27 @@ import os
 import time
 from time import localtime, strftime
 
-#init global cust. variables
-cust_name = ""
-cust_address = ""
-cust_ph_number = None 
-cust_pizza_number = None
-cust_pizzas = []
-cust_price = 0
-cust_delivery = None
+#init cust. class
+
+class cust:
+    def __init__(self):
+        self.name = ""
+        self.address = ""
+        self.ph_number = ""
+        self.pizza_number = ""
+        self.pizzas = []
+        self.price = 0
+        self.delivery = None
+
+
+        
+'''cust.name = ""
+cust.address = ""
+cust.ph_number = None 
+cust.pizza_number = None
+cust.pizzas = []
+cust.price = 0
+cust.delivery = None '''
 
 #constant variables
 pizzas = ["Cheese", "Pepperoni", "Hawaiian", "Veggie", "Beef & Onion", "Garlic Cheese", "Ham & Cheese", "Butter Chicken", "Shrimp", "Meatlovers", "Apricot Chicken", "Supreme"]
@@ -19,7 +32,7 @@ pizza_prices = [10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 15.5, 15.5, 15.5, 15.5
 
 #display related variables
 seperator = "***********************************************************************"
-flatSeperator = "-----------------------------------------------------------------------"
+
 
 
 
@@ -53,23 +66,17 @@ def printOut(x):
             print("{}: {}".format(i+1, pizzas[i]))
         print(seperator)
     elif x == 3:
-        global cust_pizzas
         title()
         print("ORDER:\n")
         custInfo()
         blankLine(2)
         i = 0
-        for i  in range(len(cust_pizzas)):
-            print("{} ${}".format(cust_pizzas[i], pizza_prices[pizzas.index(cust_pizzas[i])]))
-        if cust_delivery == True:
+        for i  in range(len(cust.pizzas)):
+            print("{} ${}".format(cust.pizzas[i], pizza_prices[pizzas.index(cust.pizzas[i])]))
+        if cust.delivery == True:
             print("Delivery $3")
-        print("TOTAL= ${}".format(cust_price))
+        print("TOTAL= ${}".format(cust.price))
         print(seperator)
-        
-        
-    elif x == 4:
-        title()
-        
     else:
         print("Output error in printout(). Halting...")
         exit()
@@ -85,10 +92,11 @@ def blankLine(x):
         print("")
 
 def custInfo():
+    flatSeperator = "-----------------------------------------------------------------------"
     print(flatSeperator)
     print("Customer name                  | ", end="")
-    if cust_name != "":
-        print(cust_name)
+    if cust.name != "":
+        print(cust.name)
     else:
         print("")
         
@@ -96,27 +104,27 @@ def custInfo():
     
     print(flatSeperator)
     print("Total number of pizzas ordered | ", end="")
-    if cust_pizza_number != None:
-        print(cust_pizza_number)
+    if cust.pizza_number != None:
+        print(cust.pizza_number)
     else:
         print("")
         
     print(flatSeperator)    
     print("Total order cost               | $", end="")
-    print(cust_price)
+    print(cust.price)
     
     print(flatSeperator)
-    if cust_delivery == True:
+    if cust.delivery == True:
         print("Customer address               | ", end="")
-        if cust_address != "":
-            print(cust_address)
+        if cust.address != "":
+            print(cust.address)
         else:
             print("")
         print(flatSeperator)
         
         print("Customer phone number          | ", end="")
-        if cust_ph_number != None:
-            print(cust_ph_number)
+        if cust.ph_number != None:
+            print(cust.ph_number)
         else:
             print("")
         print(flatSeperator)
@@ -126,8 +134,8 @@ def custInfo():
 def currentPizzas():
     pizzaLines = 5
     print("Current Pizzas:\n")
-    for i in range(len(cust_pizzas)):
-        print(cust_pizzas[i])
+    for i in range(len(cust.pizzas)):
+        print(cust.pizzas[i])
         pizzaLines += -1
     blankLine(pizzaLines)
 
@@ -138,12 +146,11 @@ def ordinal(x):
     return val
 #input functions
 def deliveryQuery():
-    global cust_price
     while True:
         cust_input = input("Is this order for delivery? (y/n) >")
         if cust_input.lower() == "y" or cust_input.lower() == "n":
             if cust_input.lower() == "y":
-                cust_price += 3
+                cust.price += 3
                 return True
             else:
                 return False
@@ -151,7 +158,6 @@ def deliveryQuery():
         print("Wrong input, try again")
 
 def confirmQuery():
-    global cust_price
     while True:
         cust_input = input("Do you want to confirm this order? (y/n) >")
         if cust_input.lower() == "y" or cust_input.lower() == "n":
@@ -175,15 +181,14 @@ def orderSizeQuery():
             print("That's not a valid number.  Try again.")
 
 def pizzaQuery():
-    global cust_price
     i = 0
-    while i < cust_pizza_number:
+    while i < cust.pizza_number:
         try:
             cust_input = int(input("What is the {} pizza the customer is ordering? >".format(ordinal(i+1))))
             if cust_input > 0 and cust_input < 13:
                 i += 1
-                cust_pizzas.append(pizzas[cust_input-1])
-                cust_price += pizza_prices[cust_input-1]
+                cust.pizzas.append(pizzas[cust_input-1])
+                cust.price += pizza_prices[cust_input-1]
                 printOut(2)
             else:
                 printOut(2)
@@ -191,23 +196,28 @@ def pizzaQuery():
         except:
             printOut(2)
             print("That's not a valid number.  Try again.")
+
+
+
+#***********************MAIN PROCESS***********************
+cust = cust()
 while True:
     printOut(1)
-    cust_delivery = deliveryQuery()
+    cust.delivery = deliveryQuery()
     
     printOut(1)
-    cust_name = input("What is the customer's name? >")
+    cust.name = input("What is the customer's name? >")
     
     printOut(1)
-    if cust_delivery == True:
-        cust_address = input("What is the customer's address? >")
+    if cust.delivery == True:
+        cust.address = input("What is the customer's address? >")
         
         printOut(1)
-        cust_ph_number = input("What is the customer's phone number? >")
+        cust.ph_number = input("What is the customer's phone number? >")
 
         printOut(1)
     
-    cust_pizza_number = orderSizeQuery()
+    cust.pizza_number = orderSizeQuery()
     
     printOut(2)
     pizzaQuery()
@@ -218,29 +228,22 @@ while True:
     if validate == True:
         print("ORDER CONFIRMED")
         filename = "dockets/"+strftime("%Y-%m-%d_%H.%M", localtime())+".txt"
-        if cust_ph_number == None:
-            cust_ph_number = ""
-            cust_address = ""
+        if cust.ph_number == None:
+            cust.ph_number = ""
+            cust.address = ""
         docket = open(filename,"w")
-        docket.write(cust_name + "\n" + cust_address + "\n" + cust_ph_number + "\n\n")
+        docket.write(cust.name + "\n" + cust.address + "\n" + cust.ph_number + "\n\n")
         i = 0
-        for i  in range(len(cust_pizzas)):
-            docket.write("{} ${}\n".format(cust_pizzas[i], pizza_prices[pizzas.index(cust_pizzas[i])]))
-        if cust_delivery == True:
+        for i  in range(len(cust.pizzas)):
+            docket.write("{} ${}\n".format(cust.pizzas[i], pizza_prices[pizzas.index(cust.pizzas[i])]))
+        if cust.delivery == True:
             docket.write("Delivery $3 \n\n")
-        docket.write("TOTAL= " + str(cust_price) + "\n")
+        docket.write("TOTAL= " + str(cust.price) + "\n")
         
         docket.close()
         
     else:
         print("ORDER CLEARED")
      
-    cust_name = ""
-    cust_address = ""
-    cust_ph_number = None 
-    cust_pizza_number = None
-    cust_pizzas = []
-    cust_price = 0
-    cust_delivery = None
-    
+    cust.__init__()
     time.sleep(3)
