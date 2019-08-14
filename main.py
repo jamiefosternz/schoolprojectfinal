@@ -15,17 +15,7 @@ class cust:
         self.price = 0
         self.delivery = None
 
-
-        
-'''cust.name = ""
-cust.address = ""
-cust.ph_number = None 
-cust.pizza_number = None
-cust.pizzas = []
-cust.price = 0
-cust.delivery = None '''
-
-#constant variables
+#Pizza menu.  each index for a given pizza and it's price 
 pizzas = ["Cheese", "Pepperoni", "Hawaiian", "Veggie", "Beef & Onion", "Garlic Cheese", "Ham & Cheese", "Butter Chicken", "Shrimp", "Meatlovers", "Apricot Chicken", "Supreme"]
 pizza_prices = [10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 15.5, 15.5, 15.5, 15.5, 15.5]
 
@@ -144,6 +134,7 @@ def ordinal(x):
     suffix = ["st", "nd", "rd", "th", "th"]
     val = str(x) + "{}".format(suffix[x-1])
     return val
+
 #input functions
 def deliveryQuery():
     while True:
@@ -171,7 +162,7 @@ def confirmQuery():
 def orderSizeQuery():
     while True:
         try:
-            cust_input = int(input("How many pizzas is the customer ordering? (max 5) >"))
+            cust_input = int(input("How many pizzas is the customer ordering? (max 5) >").strip())
             if cust_input > 0 and cust_input < 6:
                 return cust_input
             printOut(1)
