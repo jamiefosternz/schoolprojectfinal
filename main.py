@@ -34,7 +34,7 @@ seperator = "*******************************************************************
     
 def printOut(x):
     os.system("cls")
-    if x == 1:
+    if x == 1: 				#prints out title, customer info, and current pizzas ordered
         title()
         blankLine(1)
         custInfo()
