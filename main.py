@@ -33,6 +33,8 @@ seperator = "*******************************************************************
     #display order      = 4
     
 def printOut(x):
+    screenlines = len(pizzas) + 31
+    os.system("mode con: cols=71 lines="+str(screenlines))
     os.system("cls")
     if x == 1: 				#prints out title, customer info, and current pizzas ordered
         title()
