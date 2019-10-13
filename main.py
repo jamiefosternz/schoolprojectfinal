@@ -4,7 +4,6 @@ import time
 from time import localtime, strftime
 
 #init cust. class
-
 class cust:
     def __init__(self):
         self.name = ""
@@ -15,77 +14,78 @@ class cust:
         self.price = 0
         self.delivery = None
 
-#Pizza menu.  each index for a given pizza and it's price 
-pizzas = ["Cheese", "Pepperoni", "Hawaiian", "Veggie", "Beef & Onion", "Garlic Cheese", "Ham & Cheese", "Butter Chicken", "Shrimp", "Meatlovers", "Apricot Chicken", "Supreme"]
-pizza_prices = [10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 15.5, 15.5, 15.5, 15.5, 15.5]
-
-
-#display related variables
-seperator = "***********************************************************************"
-
-
-
-
+#Pizza menu.  Each index for a given pizza and it's price 
+PIZZAS = ["Cheese", "Pepperoni", "Hawaiian", "Veggie", "Beef & Onion", "Garlic Cheese", "Ham & Cheese", "Butter Chicken", "Shrimp", "Meatlovers", "Apricot Chicken", "Supreme"]
+PIZZA_PRICES = [10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 10.5, 15.5, 15.5, 15.5, 15.5, 15.5]
+DELIVERY_COST = 3
 #main function to printout.  Integer input for state of program to print out specific page -
     #pre deliv/pickup   = 1
     #cust. info input   = 2
     #confirm order      = 3
     #display order      = 4
-    
-def printOut(x):
-    screenlines = len(pizzas) + 31
+
+#display related variables
+SEPERATOR = "***********************************************************************"
+
+def print_out(x):
+    screenlines = len(PIZZAS) + 31
     os.system("mode con: cols=71 lines="+str(screenlines))
     os.system("cls")
     if x == 1: 				#prints out title, customer info, and current pizzas ordered
         title()
-        blankLine(1)
-        custInfo()
-        blankLine(1)
-        print(seperator)
-        currentPizzas()
-        print(seperator)
+        blank_line(1)
+        cust_info()
+        blank_line(1)
+        print(SEPERATOR)
+        current_pizzas()
+        print(SEPERATOR)
         
-    elif x == 2:
+    elif x == 2:            #prints out all in print_out(1) and available pizzas on menu
         title()
-        blankLine(1)
-        custInfo()
-        blankLine(1)
-        print(seperator)
-        currentPizzas()
-        print(seperator)
+        blank_line(1)
+        cust_info()
+        blank_line(1)
+        print(SEPERATOR)
+        current_pizzas()
+        print(SEPERATOR)
         print("Available pizzas:")
-        for i in range(len(pizzas)):
-            print("{}: {}".format(i+1, pizzas[i]))
-        print(seperator)
+        for i in range(len(PIZZAS)):
+            print("{}: ${} : {}".format(i+1, PIZZA_PRICES[i], PIZZAS[i]))
+        print(SEPERATOR)
+
     elif x == 3:
-        title()
+        title()             #prints out order summary
         print("ORDER:\n")
-        custInfo()
-        blankLine(2)
+        cust_info()
+        blank_line(2)
         i = 0
         for i  in range(len(cust.pizzas)):
-            print("{} ${}".format(cust.pizzas[i], pizza_prices[pizzas.index(cust.pizzas[i])]))
+            print("{} ${}".format(cust.pizzas[i], PIZZA_PRICES[PIZZAS.index(cust.pizzas[i])]))
         if cust.delivery == True:
             print("Delivery $3")
         print("TOTAL= ${}".format(cust.price))
-        print(seperator)
-    else:
+        print(SEPERATOR)
+
+    else:                   #if print_out() argument is invalid.  Only used for debugging as no dynamic values are input into this.
         print("Output error in printout(). Halting...")
         exit()
             
 #functions used in printout() to simplify process
+#prints out program title
 def title():
-    print(seperator)
+    print(SEPERATOR)
     print("********************* Pizza Order Management v1.0 *********************")
-    print(seperator) 
+    print(SEPERATOR) 
 
-def blankLine(x):
+#prints x blank lines
+def blank_line(x):
     for i in range(x):
         print("")
 
-def custInfo():
-    flatSeperator = "-----------------------------------------------------------------------"
-    print(flatSeperator)
+#prints out relevant cust class variables
+def cust_info():
+    FLATSEPERATOR = "-----------------------------------------------------------------------"
+    print(FLATSEPERATOR)
     print("Customer name                  | ", end="")
     if cust.name != "":
         print(cust.name)
@@ -94,42 +94,43 @@ def custInfo():
         
     
     
-    print(flatSeperator)
+    print(FLATSEPERATOR)
     print("Total number of pizzas ordered | ", end="")
     if cust.pizza_number != None:
         print(cust.pizza_number)
     else:
         print("")
         
-    print(flatSeperator)    
+    print(FLATSEPERATOR)    
     print("Total order cost               | $", end="")
     print(cust.price)
     
-    print(flatSeperator)
+    print(FLATSEPERATOR)
     if cust.delivery == True:
         print("Customer address               | ", end="")
         if cust.address != "":
             print(cust.address)
         else:
             print("")
-        print(flatSeperator)
+        print(FLATSEPERATOR)
         
         print("Customer phone number          | ", end="")
         if cust.ph_number != None:
             print(cust.ph_number)
         else:
             print("")
-        print(flatSeperator)
+        print(FLATSEPERATOR)
     else:
-        blankLine(4)
+        blank_line(4)
 
-def currentPizzas():
+#prints out pizzas in cust's order
+def current_pizzas():
     pizzaLines = 5
     print("Current Pizzas:\n")
     for i in range(len(cust.pizzas)):
         print(cust.pizzas[i])
         pizzaLines += -1
-    blankLine(pizzaLines)
+    blank_line(pizzaLines)
 
 #appends ordinal numbers for numbers 1-5
 def ordinal(x):
@@ -137,20 +138,20 @@ def ordinal(x):
     val = str(x) + "{}".format(suffix[x-1])
     return val
 
-#input functions
-def deliveryQuery():
+#input functions.  All include relevant error trapping
+def delivery_query():
     while True:
         cust_input = input("Is this order for delivery? (y/n) >")
         if cust_input.lower() == "y" or cust_input.lower() == "n":
             if cust_input.lower() == "y":
-                cust.price += 3
+                cust.price += DELIVERY_COST
                 return True
             else:
                 return False
-        printOut(1)
+        print_out(1)
         print("Wrong input, try again")
 
-def confirmQuery():
+def confirm_query():
     while True:
         cust_input = input("Do you want to confirm this order? (y/n) >")
         if cust_input.lower() == "y" or cust_input.lower() == "n":
@@ -158,66 +159,70 @@ def confirmQuery():
                 return True
             else:
                 return False
-        printOut(3)
+        print_out(3)
         print("Wrong input, try again")
 
-def orderSizeQuery():
+def order_size_query():
     while True:
         try:
             cust_input = int(input("How many pizzas is the customer ordering? (max 5) >").strip())
             if cust_input > 0 and cust_input < 6:
                 return cust_input
-            printOut(1)
+            print_out(1)
             print("Wrong input, try again")
         except:
-            printOut(1)
+            print_out(1)
             print("That's not a valid number.  Try again.")
 
-def pizzaQuery():
+def pizza_query():
     i = 0
     while i < cust.pizza_number:
         try:
             cust_input = int(input("What is the {} pizza the customer is ordering? >".format(ordinal(i+1))))
             if cust_input > 0 and cust_input < 13:
                 i += 1
-                cust.pizzas.append(pizzas[cust_input-1])
-                cust.price += pizza_prices[cust_input-1]
-                printOut(2)
+                cust.pizzas.append(PIZZAS[cust_input-1])
+                cust.price += PIZZA_PRICES[cust_input-1]
+                print_out(2)
             else:
-                printOut(2)
+                print_out(2)
                 print("Wrong input, try again")
         except:
-            printOut(2)
+            print_out(2)
             print("That's not a valid number.  Try again.")
 
 
 
 #***********************MAIN PROCESS***********************
+
+#init cust class as cust
 cust = cust()
+
+#main loop to enable multiple entries
 while True:
-    printOut(1)
-    cust.delivery = deliveryQuery()
+    print_out(1)                                                         #Get cust. information
+    cust.delivery = delivery_query()    
     
-    printOut(1)
+    print_out(1)
     cust.name = input("What is the customer's name? >")
     
-    printOut(1)
+    print_out(1)
     if cust.delivery == True:
         cust.address = input("What is the customer's address? >")
         
-        printOut(1)
+        print_out(1)
         cust.ph_number = input("What is the customer's phone number? >")
 
-        printOut(1)
+        print_out(1)
+                                                                        #Start query for # of pizzas, types of pizzas etc.
+    cust.pizza_number = order_size_query()
     
-    cust.pizza_number = orderSizeQuery()
+    print_out(2)
+    pizza_query()
     
-    printOut(2)
-    pizzaQuery()
-    
-    printOut(3)
-    validate = confirmQuery()
-    printOut(3)
+    print_out(3)                                                        #Confirm order?
+    validate = confirm_query()
+    print_out(3)                                                        #Show order, output to a text file if validate = true
     if validate == True:
         print("ORDER CONFIRMED")
         filename = "dockets/"+strftime("%Y-%m-%d_%H.%M", localtime())+".txt"
@@ -228,7 +233,7 @@ while True:
         docket.write(cust.name + "\n" + cust.address + "\n" + cust.ph_number + "\n\n")
         i = 0
         for i  in range(len(cust.pizzas)):
-            docket.write("{} ${}\n".format(cust.pizzas[i], pizza_prices[pizzas.index(cust.pizzas[i])]))
+            docket.write("{} ${}\n".format(cust.pizzas[i], PIZZA_PRICES[PIZZAS.index(cust.pizzas[i])]))
         if cust.delivery == True:
             docket.write("Delivery $3 \n\n")
         docket.write("TOTAL= " + str(cust.price) + "\n")
@@ -238,5 +243,5 @@ while True:
     else:
         print("ORDER CLEARED")
      
-    cust.__init__()
+    cust.__init__()                                                      #reset cust. variables
     time.sleep(3)
