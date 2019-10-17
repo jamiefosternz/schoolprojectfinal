@@ -31,7 +31,7 @@ def print_out(x):
     screenlines = len(PIZZAS) + 31
     os.system("mode con: cols=71 lines="+str(screenlines))
     os.system("cls")
-    if x == 1: 				#prints out title, customer info, and current pizzas ordered
+    if x == 1:
         title()
         blank_line(1)
         cust_info()
